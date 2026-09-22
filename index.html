@@ -1,150 +1,769 @@
-from pathlib import Path
-
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Hans Fatima 💗</title>
+
+<title>For Hana Fatima ✨</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-  font-family:system-ui,-apple-system,Segoe UI,sans-serif;
-  min-height:100vh;overflow-x:hidden;
-  background:linear-gradient(135deg,#160b2d,#42144f,#8d245b);
-  color:white;text-align:center;
+    background:#05030b;
+    color:white;
+    font-family:'Montserrat',sans-serif;
+    overflow-x:hidden;
 }
-canvas{position:fixed;inset:0;pointer-events:none;z-index:0}
-.page{position:relative;z-index:1;min-height:100vh;padding:45px 20px 60px}
-.card{
-  max-width:760px;margin:auto;padding:45px 25px;
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.22);
-  backdrop-filter:blur(15px);border-radius:30px;
-  box-shadow:0 20px 80px rgba(0,0,0,.3);
+
+/* =========================
+   CINEMATIC INTRO
+========================= */
+
+.intro{
+    position:fixed;
+    inset:0;
+    background:#05030b;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    animation:introFade 2s ease 5s forwards;
+    pointer-events:none;
 }
-.badge{font-size:14px;letter-spacing:3px;text-transform:uppercase;opacity:.8}
-h1{
-  font-size:clamp(48px,11vw,96px);line-height:.95;
-  margin:18px 0;color:#fff;
-  text-shadow:0 0 30px rgba(255,155,220,.5);
+
+.intro-line{
+    width:0;
+    height:1px;
+    background:#f7c8e0;
+    animation:lineGrow 1.5s ease forwards;
 }
-.name{color:#ffd1ef}
-.subtitle{font-size:20px;opacity:.9;margin-bottom:30px}
-.cake{font-size:100px;filter:drop-shadow(0 0 20px #ff9bd8);animation:bob 2s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(-10px) rotate(2deg)}}
-button{
-  border:0;border-radius:999px;padding:15px 25px;margin:8px;
-  font-size:16px;font-weight:700;cursor:pointer;color:#4a123e;
-  background:#ffd3ee;box-shadow:0 8px 25px rgba(0,0,0,.2);
-  transition:.2s;
+
+.intro p{
+    margin:25px;
+    font-size:11px;
+    letter-spacing:6px;
+    text-transform:uppercase;
+    color:#cdbbc8;
+    opacity:0;
+    animation:textAppear 1.5s ease 1.2s forwards;
 }
-button:hover{transform:translateY(-3px) scale(1.03)}
-.message{
-  margin:30px auto 0;max-width:600px;line-height:1.8;
-  font-size:18px;background:rgba(0,0,0,.12);padding:25px;border-radius:20px;
+
+.intro h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(45px,10vw,90px);
+    font-weight:500;
+    opacity:0;
+    animation:titleAppear 2s ease 2s forwards;
 }
-.hidden{display:none}
-.wishes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:25px}
-.wish{padding:18px;border-radius:18px;background:rgba(255,255,255,.10)}
-.footer{margin-top:35px;font-size:13px;opacity:.7}
-#surprise{margin-top:25px;font-size:20px;color:#ffe0f3;min-height:30px}
+
+@keyframes lineGrow{
+    to{width:180px}
+}
+
+@keyframes textAppear{
+    to{opacity:1}
+}
+
+@keyframes titleAppear{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes introFade{
+    to{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+}
+
+.background{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    background:
+        radial-gradient(circle at 20% 20%,#6b235d55,transparent 35%),
+        radial-gradient(circle at 80% 70%,#392d8550,transparent 35%),
+        linear-gradient(145deg,#05030b,#16091d,#070510);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:30px;
+    position:relative;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.small{
+    font-size:11px;
+    letter-spacing:7px;
+    text-transform:uppercase;
+    color:#d9c2d2;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(75px,15vw,180px);
+    line-height:.75;
+    font-weight:500;
+    letter-spacing:-5px;
+}
+
+.hero h1 span{
+    display:block;
+    color:#f3b9da;
+    text-shadow:
+        0 0 20px #e68fc855,
+        0 0 70px #e68fc833;
+}
+
+.subtitle{
+    margin-top:35px;
+    color:#cfc5d0;
+    font-size:15px;
+    letter-spacing:2px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn{
+    margin-top:45px;
+    padding:15px 30px;
+    border:1px solid #e8bfd9;
+    border-radius:50px;
+    background:rgba(255,255,255,.05);
+    color:white;
+    font-size:13px;
+    letter-spacing:2px;
+    cursor:pointer;
+    transition:.4s;
+    backdrop-filter:blur(10px);
+}
+
+.btn:hover{
+    background:#f0bad9;
+    color:#180817;
+    transform:translateY(-4px);
+    box-shadow:0 10px 40px #ed9fd755;
+}
+
+/* =========================
+   STORY SECTIONS
+========================= */
+
+section.story{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:80px 25px;
+}
+
+.story-box{
+    max-width:800px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(60px);
+    transition:1.5s ease;
+}
+
+.story-box.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.number{
+    font-size:11px;
+    letter-spacing:5px;
+    color:#bd9aae;
+    margin-bottom:25px;
+}
+
+.story h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(45px,8vw,90px);
+    font-weight:500;
+    line-height:1;
+}
+
+.story p{
+    max-width:600px;
+    margin:30px auto;
+    color:#bdb3bd;
+    line-height:2;
+    font-size:16px;
+}
+
+/* =========================
+   CAKE
+========================= */
+
+.cake-section{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.cake{
+    font-size:120px;
+    filter:drop-shadow(0 0 35px #ffafd766);
+    animation:floatCake 3s ease-in-out infinite;
+}
+
+@keyframes floatCake{
+    50%{
+        transform:translateY(-18px);
+    }
+}
+
+.cake-section h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:65px;
+    margin-top:30px;
+}
+
+.cake-section p{
+    color:#aaa0aa;
+    margin-top:15px;
+}
+
+/* =========================
+   LETTER
+========================= */
+
+.letter-section{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+.letter{
+    max-width:700px;
+    padding:60px 45px;
+    border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.04);
+    backdrop-filter:blur(20px);
+    border-radius:4px;
+    box-shadow:0 30px 100px #00000070;
+}
+
+.letter h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:55px;
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.letter p{
+    color:#c7bdc7;
+    line-height:2;
+    font-size:16px;
+}
+
+.signature{
+    margin-top:35px;
+    text-align:right;
+    color:#efbddb;
+    font-family:'Cormorant Garamond',serif;
+    font-size:28px;
+}
+
+/* =========================
+   FINAL
+========================= */
+
+.final{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:30px;
+}
+
+.final h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(60px,12vw,130px);
+    font-weight:500;
+    line-height:.85;
+}
+
+.final span{
+    color:#f1b9da;
+}
+
+.final p{
+    margin-top:35px;
+    color:#aaa0aa;
+    letter-spacing:2px;
+}
+
+.footer{
+    padding:40px;
+    text-align:center;
+    color:#665b66;
+    font-size:10px;
+    letter-spacing:3px;
+}
+
+/* =========================
+   HEART PARTICLES
+========================= */
+
+.heart{
+    position:fixed;
+    pointer-events:none;
+    animation:heartFloat 4s linear forwards;
+    z-index:10;
+}
+
+@keyframes heartFloat{
+    0%{
+        transform:translateY(0) scale(.5);
+        opacity:0;
+    }
+
+    15%{
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(-100vh) scale(1.3) rotate(20deg);
+        opacity:0;
+    }
+}
+
+/* mobile */
+
+@media(max-width:600px){
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    .letter{
+        padding:40px 25px;
+    }
+
+    .story p,
+    .letter p{
+        font-size:14px;
+    }
+
+    .cake{
+        font-size:90px;
+    }
+}
 </style>
 </head>
+
 <body>
+
+<div class="background"></div>
+
 <canvas id="stars"></canvas>
 
-<div class="page">
-  <main class="card">
-    <div class="badge">A little birthday universe made for</div>
-    <h1>Hans<br><span class="name">Fatima</span> 💗</h1>
-    <p class="subtitle">Today, the spotlight belongs to you. ✨</p>
+<!-- CINEMATIC INTRO -->
+
+<div class="intro">
+
+    <div class="intro-line"></div>
+
+    <p>A special day has arrived</p>
+
+    <h1>For Hana</h1>
+
+    <div class="intro-line"></div>
+
+</div>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+    <div class="small">
+        September 23 • A Day Worth Remembering
+    </div>
+
+    <h1>
+        Happy
+        <span>Birthday</span>
+    </h1>
+
+    <div class="small" style="margin-top:25px;">
+        Hana Fatima
+    </div>
+
+    <p class="subtitle">
+        Tonight, the universe has one little reason to celebrate.
+    </p>
+
+    <button class="btn" onclick="celebrate()">
+        ENTER THE CELEBRATION ✦
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- STORY -->
+
+<section class="story">
+
+<div class="story-box">
+
+    <div class="number">01 — TODAY</div>
+
+    <h2>
+        A new chapter
+        begins.
+    </h2>
+
+    <p>
+        Another year of your story has arrived.
+        New memories will be created, new dreams will grow,
+        and countless moments are still waiting for you.
+    </p>
+
+</div>
+
+</section>
+
+
+<section class="story">
+
+<div class="story-box">
+
+    <div class="number">02 — A WISH</div>
+
+    <h2>
+        May your smile
+        never disappear.
+    </h2>
+
+    <p>
+        May Allah protect you, guide you toward what is good,
+        give you success in your dreams, and fill your life
+        with peace, happiness and beautiful memories.
+    </p>
+
+</div>
+
+</section>
+
+
+<!-- CAKE -->
+
+<section class="cake-section">
+
+    <div class="number">03 — MAKE A WISH</div>
 
     <div class="cake">🎂</div>
 
-    <button onclick="startCelebration()">🎉 Start the Celebration</button>
-    <button onclick="showSurprise()">💌 Open Your Surprise</button>
+    <h2>Close your eyes.</h2>
 
-    <div id="surprise"></div>
+    <p>Make a wish... ✨</p>
 
-    <section class="message">
-      <p>
-        <strong>Happy Birthday, Hans Fatima! 🌸</strong><br><br>
-        May Allah bless you with happiness, good health, success,
-        beautiful memories and countless reasons to smile.
-        May every new chapter of your life bring you closer to your dreams. 🤍
+    <button class="btn" onclick="makeWish()">
+        ✦ MAKE THE WISH
+    </button>
+
+</section>
+
+
+<!-- LETTER -->
+
+<section class="letter-section">
+
+<div class="letter">
+
+    <h2>Dear Hana,</h2>
+
+    <p>
+        Today is your day.
         <br><br>
-        Keep smiling. Keep learning. Keep being wonderfully YOU.
-      </p>
-    </section>
 
-    <div class="wishes">
-      <div class="wish">🌷 Happiness</div>
-      <div class="wish">✨ Bright Dreams</div>
-      <div class="wish">🤍 Endless Love</div>
-      <div class="wish">🌙 Allah's Blessings</div>
+        I hope when you look back at this little website,
+        you remember that someone took the time to create
+        something especially for you.
+        <br><br>
+
+        Life will bring difficult days and beautiful days.
+        Through all of them, keep learning, keep growing,
+        keep smiling and never stop believing in the person
+        you are becoming.
+        <br><br>
+
+        May this new chapter bring you closer to everything
+        you dream about.
+        <br><br>
+
+        And most importantly...
+        <br><br>
+
+        <strong>
+        May Allah always keep you safe, happy and blessed.
+        </strong>
+    </p>
+
+    <div class="signature">
+        Happy Birthday, Hana 🤍
     </div>
 
-    <p class="footer">Made with love for Hans Fatima • Birthday 2026 🎀</p>
-  </main>
 </div>
 
+</section>
+
+
+<!-- FINAL -->
+
+<section class="final">
+
+<div>
+
+    <div class="small">
+        THE END OF THIS LITTLE STORY
+    </div>
+
+    <h2>
+        Happy Birthday,
+        <span>Hana.</span>
+    </h2>
+
+    <p>
+        Your next chapter starts now. ✨
+    </p>
+
+    <button class="btn" onclick="celebrate()">
+        SEND SOME MAGIC ✦
+    </button>
+
+</div>
+
+</section>
+
+<div class="footer">
+    MADE ESPECIALLY FOR HANA FATIMA • 2026
+</div>
+
+
 <script>
-const canvas=document.getElementById("stars"),ctx=canvas.getContext("2d");
-let W,H,stars=[];
+
+/* =========================
+   STARS
+========================= */
+
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+
+let stars=[];
+
 function resize(){
-  W=canvas.width=innerWidth; H=canvas.height=innerHeight;
-  stars=Array.from({length:110},()=>({x:Math.random()*W,y:Math.random()*H,
-    r:Math.random()*1.8+.3,s:Math.random()*.6+.2}));
-}
-function draw(){
-  ctx.clearRect(0,0,W,H);
-  ctx.fillStyle="rgba(255,255,255,.8)";
-  stars.forEach(a=>{
-    a.y-=a.s;if(a.y<0)a.y=H;
-    ctx.globalAlpha=.35+Math.random()*.55;
-    ctx.beginPath();ctx.arc(a.x,a.y,a.r,0,Math.PI*2);ctx.fill();
-  });
-  requestAnimationFrame(draw);
-}
-resize();addEventListener("resize",resize);draw();
 
-function burst(){
-  for(let i=0;i<55;i++){
-    const e=document.createElement("div");
-    e.textContent=["🎉","💖","✨","🌸","🎈"][Math.floor(Math.random()*5)];
-    e.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:${55+Math.random()*20}vh;
-      font-size:${18+Math.random()*25}px;z-index:5;pointer-events:none;
-      animation:fall ${2+Math.random()*2}s linear forwards`;
-    document.body.appendChild(e);setTimeout(()=>e.remove(),4500);
-  }
-}
-const st=document.createElement("style");
-st.textContent="@keyframes fall{to{transform:translateY(65vh) rotate(500deg);opacity:0}}";
-document.head.appendChild(st);
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
 
-function startCelebration(){
-  burst();
-  document.getElementById("surprise").textContent="🎊 YAY! Hans Fatima's birthday celebration has officially started! 🎊";
+    stars=[];
+
+    for(let i=0;i<180;i++){
+
+        stars.push({
+            x:Math.random()*canvas.width,
+            y:Math.random()*canvas.height,
+            r:Math.random()*1.5,
+            speed:Math.random()*.3
+        });
+
+    }
 }
-function showSurprise(){
-  const messages=[
-    "💌 You are one of the beautiful reasons this family smiles.",
-    "🌟 Your next chapter is waiting to be written.",
-    "🎀 Never forget: you are loved more than you realize.",
-    "🌙 May Allah protect you and guide you toward everything good."
-  ];
-  let i=0,box=document.getElementById("surprise");
-  box.textContent=messages[i];
-  const timer=setInterval(()=>{
-    i++; if(i>=messages.length){clearInterval(timer);return}
-    box.textContent=messages[i];
-  },1800);
+
+function animateStars(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle="white";
+
+    stars.forEach(star=>{
+
+        star.y+=star.speed;
+
+        if(star.y>canvas.height)
+            star.y=0;
+
+        ctx.globalAlpha=Math.random();
+
+        ctx.beginPath();
+        ctx.arc(
+            star.x,
+            star.y,
+            star.r,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    });
+
+    requestAnimationFrame(animateStars);
 }
+
+resize();
+window.addEventListener("resize",resize);
+animateStars();
+
+
+/* =========================
+   SCROLL ANIMATION
+========================= */
+
+const boxes=document.querySelectorAll(".story-box");
+
+const observer=new IntersectionObserver(
+    entries=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+                entry.target.classList.add("visible");
+            }
+
+        });
+
+    },
+    {threshold:.25}
+);
+
+boxes.forEach(box=>observer.observe(box));
+
+
+/* =========================
+   HEART EFFECT
+========================= */
+
+function createHeart(){
+
+    const heart=document.createElement("div");
+
+    heart.className="heart";
+
+    heart.innerHTML=[
+        "🤍",
+        "💗",
+        "✨",
+        "🌸",
+        "💫"
+    ][Math.floor(Math.random()*5)];
+
+    heart.style.left=Math.random()*100+"vw";
+
+    heart.style.bottom="-30px";
+
+    heart.style.fontSize=
+        (15+Math.random()*25)+"px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },4000);
+}
+
+
+/* =========================
+   CELEBRATION
+========================= */
+
+function celebrate(){
+
+    for(let i=0;i<35;i++){
+
+        setTimeout(
+            createHeart,
+            i*80
+        );
+
+    }
+
+    window.scrollTo({
+        top:window.innerHeight,
+        behavior:"smooth"
+    });
+}
+
+
+/* =========================
+   WISH
+========================= */
+
+function makeWish(){
+
+    for(let i=0;i<60;i++){
+
+        setTimeout(
+            createHeart,
+            i*40
+        );
+
+    }
+
+    alert(
+        "✨ Wish made! ✨\n\n" +
+        "May Allah make it a beautiful one."
+    );
+}
+
 </script>
-</body>
-</html>'''
 
-path = Path("/mnt/data/hans_fatima_birthday.html")
-path.write_text(html, encoding="utf-8")
-print(f"Created: {path}")
+</body>
+</html>

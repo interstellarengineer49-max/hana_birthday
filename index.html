@@ -1,0 +1,150 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Hans Fatima 💗</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+  min-height:100vh;overflow-x:hidden;
+  background:linear-gradient(135deg,#160b2d,#42144f,#8d245b);
+  color:white;text-align:center;
+}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:0}
+.page{position:relative;z-index:1;min-height:100vh;padding:45px 20px 60px}
+.card{
+  max-width:760px;margin:auto;padding:45px 25px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(15px);border-radius:30px;
+  box-shadow:0 20px 80px rgba(0,0,0,.3);
+}
+.badge{font-size:14px;letter-spacing:3px;text-transform:uppercase;opacity:.8}
+h1{
+  font-size:clamp(48px,11vw,96px);line-height:.95;
+  margin:18px 0;color:#fff;
+  text-shadow:0 0 30px rgba(255,155,220,.5);
+}
+.name{color:#ffd1ef}
+.subtitle{font-size:20px;opacity:.9;margin-bottom:30px}
+.cake{font-size:100px;filter:drop-shadow(0 0 20px #ff9bd8);animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px) rotate(2deg)}}
+button{
+  border:0;border-radius:999px;padding:15px 25px;margin:8px;
+  font-size:16px;font-weight:700;cursor:pointer;color:#4a123e;
+  background:#ffd3ee;box-shadow:0 8px 25px rgba(0,0,0,.2);
+  transition:.2s;
+}
+button:hover{transform:translateY(-3px) scale(1.03)}
+.message{
+  margin:30px auto 0;max-width:600px;line-height:1.8;
+  font-size:18px;background:rgba(0,0,0,.12);padding:25px;border-radius:20px;
+}
+.hidden{display:none}
+.wishes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:25px}
+.wish{padding:18px;border-radius:18px;background:rgba(255,255,255,.10)}
+.footer{margin-top:35px;font-size:13px;opacity:.7}
+#surprise{margin-top:25px;font-size:20px;color:#ffe0f3;min-height:30px}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<div class="page">
+  <main class="card">
+    <div class="badge">A little birthday universe made for</div>
+    <h1>Hans<br><span class="name">Fatima</span> 💗</h1>
+    <p class="subtitle">Today, the spotlight belongs to you. ✨</p>
+
+    <div class="cake">🎂</div>
+
+    <button onclick="startCelebration()">🎉 Start the Celebration</button>
+    <button onclick="showSurprise()">💌 Open Your Surprise</button>
+
+    <div id="surprise"></div>
+
+    <section class="message">
+      <p>
+        <strong>Happy Birthday, Hans Fatima! 🌸</strong><br><br>
+        May Allah bless you with happiness, good health, success,
+        beautiful memories and countless reasons to smile.
+        May every new chapter of your life bring you closer to your dreams. 🤍
+        <br><br>
+        Keep smiling. Keep learning. Keep being wonderfully YOU.
+      </p>
+    </section>
+
+    <div class="wishes">
+      <div class="wish">🌷 Happiness</div>
+      <div class="wish">✨ Bright Dreams</div>
+      <div class="wish">🤍 Endless Love</div>
+      <div class="wish">🌙 Allah's Blessings</div>
+    </div>
+
+    <p class="footer">Made with love for Hans Fatima • Birthday 2026 🎀</p>
+  </main>
+</div>
+
+<script>
+const canvas=document.getElementById("stars"),ctx=canvas.getContext("2d");
+let W,H,stars=[];
+function resize(){
+  W=canvas.width=innerWidth; H=canvas.height=innerHeight;
+  stars=Array.from({length:110},()=>({x:Math.random()*W,y:Math.random()*H,
+    r:Math.random()*1.8+.3,s:Math.random()*.6+.2}));
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle="rgba(255,255,255,.8)";
+  stars.forEach(a=>{
+    a.y-=a.s;if(a.y<0)a.y=H;
+    ctx.globalAlpha=.35+Math.random()*.55;
+    ctx.beginPath();ctx.arc(a.x,a.y,a.r,0,Math.PI*2);ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+resize();addEventListener("resize",resize);draw();
+
+function burst(){
+  for(let i=0;i<55;i++){
+    const e=document.createElement("div");
+    e.textContent=["🎉","💖","✨","🌸","🎈"][Math.floor(Math.random()*5)];
+    e.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:${55+Math.random()*20}vh;
+      font-size:${18+Math.random()*25}px;z-index:5;pointer-events:none;
+      animation:fall ${2+Math.random()*2}s linear forwards`;
+    document.body.appendChild(e);setTimeout(()=>e.remove(),4500);
+  }
+}
+const st=document.createElement("style");
+st.textContent="@keyframes fall{to{transform:translateY(65vh) rotate(500deg);opacity:0}}";
+document.head.appendChild(st);
+
+function startCelebration(){
+  burst();
+  document.getElementById("surprise").textContent="🎊 YAY! Hans Fatima's birthday celebration has officially started! 🎊";
+}
+function showSurprise(){
+  const messages=[
+    "💌 You are one of the beautiful reasons this family smiles.",
+    "🌟 Your next chapter is waiting to be written.",
+    "🎀 Never forget: you are loved more than you realize.",
+    "🌙 May Allah protect you and guide you toward everything good."
+  ];
+  let i=0,box=document.getElementById("surprise");
+  box.textContent=messages[i];
+  const timer=setInterval(()=>{
+    i++; if(i>=messages.length){clearInterval(timer);return}
+    box.textContent=messages[i];
+  },1800);
+}
+</script>
+</body>
+</html>'''
+
+path = Path("/mnt/data/hans_fatima_birthday.html")
+path.write_text(html, encoding="utf-8")
+print(f"Created: {path}")
